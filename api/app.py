@@ -1,9 +1,15 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import requests
 from bs4 import BeautifulSoup
 from tabulate import tabulate
+from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
+
+# Define username and password
+USER = 'bluejay'
+PASSWORD = 'chess2024'
 
 custom_headers = {
     'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
@@ -35,7 +41,13 @@ def view_players(ids):
     return all_player_data 
 
 
+@auth.verify_password
+def verify_password(username, password):
+    return username == USER and password == PASSWORD
+
+
 @app.route("/", methods=['GET', 'POST'])
+@auth.login_required
 def home():
     if request.method == 'POST':
         player_ids = request.form.get('player_ids')
@@ -48,4 +60,5 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
