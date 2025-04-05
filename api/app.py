@@ -5,11 +5,6 @@ from tabulate import tabulate
 from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
-auth = HTTPBasicAuth()
-
-# Define username and password
-USER = 'bluejay'
-PASSWORD = 'chess2024'
 
 custom_headers = {
     'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
